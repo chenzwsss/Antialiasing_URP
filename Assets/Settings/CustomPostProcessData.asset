@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21eed0106768280469011b5295b1f857, type: 3}
+  m_Name: CustomPostProcessData
+  m_EditorClassIdentifier: 
+  shaders:
+    zoomBlurShader: {fileID: 4800000, guid: 7485dfc490de35946a2b13af4fec6e06, type: 3}
+    fxaaShader: {fileID: 4800000, guid: 076e90f36af7f1e40b7cc92604bc6b4b, type: 3}
