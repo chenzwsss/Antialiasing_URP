@@ -35,6 +35,7 @@ public class CustomPostProcessData : ScriptableObject
     {
         public Shader zoomBlurShader;
         public Shader fxaaShader;
+        public Shader taaShader;
     }
 
     public ShaderResources shaders;
