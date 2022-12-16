@@ -7,7 +7,6 @@ public class FXAAPass : ScriptableRenderPass
     static readonly string k_RenderTag = "FXAA";
 
     static readonly int TempTargetId = Shader.PropertyToID("_TempTargetFxaa");
-    static readonly int MainTexId = Shader.PropertyToID("_MainTex");
     static readonly int FxaaQualityEdgeThresholdMin = Shader.PropertyToID("_FxaaQualityEdgeThresholdMin");
     static readonly int FxaaQualityEdgeThreshold = Shader.PropertyToID("_FxaaQualityEdgeThreshold");
     static readonly int FxaaQualitySubpix = Shader.PropertyToID("_FxaaQualitySubpix");
@@ -39,9 +38,9 @@ public class FXAAPass : ScriptableRenderPass
         fxaaMaterial.hideFlags = HideFlags.HideAndDontSave;
     }
 
-    public void Setup(RenderTargetIdentifier currentTarget)
+    public void Setup(RenderTargetIdentifier current)
     {
-        this.currentTarget = currentTarget;
+        currentTarget = current;
     }
 
     public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)

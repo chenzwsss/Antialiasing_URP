@@ -15,3 +15,4 @@ MonoBehaviour:
   shaders:
     zoomBlurShader: {fileID: 4800000, guid: 7485dfc490de35946a2b13af4fec6e06, type: 3}
     fxaaShader: {fileID: 4800000, guid: 076e90f36af7f1e40b7cc92604bc6b4b, type: 3}
+    taaShader: {fileID: 4800000, guid: e65495aae19759c4da34476ce1582592, type: 3}

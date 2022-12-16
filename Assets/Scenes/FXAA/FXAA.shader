@@ -15,7 +15,7 @@ Shader "Hidden/PostEffect/FXAA"
         #include "../../Shaders/Common.hlsl"
 
         TEXTURE2D(_MainTex);
-        SAMPLER(sampler_LinearClamp);
+        SAMPLER(sampler_MainTex);
 
         CBUFFER_START(UnityPerMaterial)
             float4 _MainTex_TexelSize;
@@ -58,7 +58,7 @@ Shader "Hidden/PostEffect/FXAA"
         float3 GetSource(float2 uv, float2 offset = float2(0.0, 0.0))
         {
             uv += offset * _MainTex_TexelSize.xy;
-            return SAMPLE_TEXTURE2D(_MainTex, sampler_LinearClamp, uv).rgb;
+            return SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, uv).rgb;
         }
 
         // http://blog.simonrodriguez.fr/articles/2016/07/implementing_fxaa.html
@@ -256,12 +256,6 @@ Shader "Hidden/PostEffect/FXAA"
             }
 
             return float4(GetSource(finalUv), 1.0);
-        }
-
-        float3 FXAAFetch(float2 coords, float2 offset, TEXTURE2D_X(_MainTex))
-        {
-            float2 uv = coords + offset;
-            return SAMPLE_TEXTURE2D_X(_MainTex, sampler_LinearClamp, uv).xyz;
         }
 
         float4 FXAAConsoleFrag(Varyings input) : SV_TARGET
