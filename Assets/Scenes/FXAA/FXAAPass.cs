@@ -12,9 +12,17 @@ public class FXAAPass : ScriptableRenderPass
     static readonly int FxaaQualityEdgeThreshold = Shader.PropertyToID("_FxaaQualityEdgeThreshold");
     static readonly int FxaaQualitySubpix = Shader.PropertyToID("_FxaaQualitySubpix");
 
+    static readonly int FxaaConsoleEdgeSharpness = Shader.PropertyToID("_FxaaConsoleEdgeSharpness");
+
     FXAA fxaa;
     Material fxaaMaterial;
     RenderTargetIdentifier currentTarget;
+
+    enum ShaderPasses
+    {
+        Quality,
+        Console
+    }
 
     public FXAAPass(RenderPassEvent evt, CustomPostProcessData customPostProcessData)
     {
@@ -78,13 +86,17 @@ public class FXAAPass : ScriptableRenderPass
         fxaaMaterial.SetFloat(FxaaQualityEdgeThreshold, fxaa.fxaaQualityEdgeThreshold.value);
         fxaaMaterial.SetFloat(FxaaQualitySubpix, fxaa.fxaaQualitySubpix.value);
 
+        fxaaMaterial.SetFloat(FxaaConsoleEdgeSharpness, fxaa.fxaaConsoleEdgeSharpness.value);
+
         int width = cameraData.camera.scaledPixelWidth;
         int height = cameraData.camera.scaledPixelHeight;
+
+        int shaderPass = fxaa.useConsole.value ? (int)ShaderPasses.Console : (int)ShaderPasses.Quality;
 
         cmd.GetTemporaryRT(TempTargetId, width, height, 0, FilterMode.Bilinear, RenderTextureFormat.Default);
 
         cmd.Blit(source, destination);
-        cmd.Blit(destination, source, fxaaMaterial, 0);
+        cmd.Blit(destination, source, fxaaMaterial, shaderPass);
 
         cmd.ReleaseTemporaryRT(destination);
     }

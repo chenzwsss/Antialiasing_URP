@@ -25,6 +25,12 @@ MonoBehaviour:
   fxaaQualitySubpix:
     m_OverrideState: 1
     m_Value: 0.75
+  useConsole:
+    m_OverrideState: 1
+    m_Value: 1
+  fxaaConsoleEdgeSharpness:
+    m_OverrideState: 1
+    m_Value: 8
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -8,6 +8,8 @@ public class FXAA : VolumeComponent, IPostProcessComponent
 {
     public BoolParameter enabled = new BoolParameter(false);
 
+    #region FXAAQuality
+
     // Only used on FXAA Quality.
     // This used to be the FXAA_QUALITY__EDGE_THRESHOLD_MIN define.
     // It is here now to allow easier tuning.
@@ -48,6 +50,15 @@ public class FXAA : VolumeComponent, IPostProcessComponent
     //   0.00 - completely off
     [Range(0f, 1f)]
     public ClampedFloatParameter fxaaQualitySubpix = new ClampedFloatParameter(0.75f, 0f, 1f);
+
+    #endregion
+
+    public BoolParameter useConsole = new BoolParameter(false);
+
+    // 8.0 is sharper
+    // 4.0 is softer
+    // 2.0 is really soft (good for vector graphics inputs)
+    public ClampedIntParameter fxaaConsoleEdgeSharpness = new ClampedIntParameter(8, 2, 8);
 
     public bool IsActive() => enabled.value;
 
