@@ -734,7 +734,7 @@ namespace UnityEngine.Rendering.Universal
                 lightmapBakeTypes = LightmapBakeType.Baked | LightmapBakeType.Mixed | LightmapBakeType.Realtime,
                 lightmapsModes = LightmapsMode.CombinedDirectional | LightmapsMode.NonDirectional,
                 lightProbeProxyVolumes = false,
-                motionVectors = false,
+                motionVectors = true,
                 receiveShadows = false,
                 reflectionProbes = false,
                 reflectionProbesBlendDistance = true,
@@ -1024,7 +1024,7 @@ namespace UnityEngine.Rendering.Universal
             renderingData.supportsDynamicBatching = settings.supportsDynamicBatching;
             renderingData.perObjectData = GetPerObjectLightFlags(renderingData.lightData.additionalLightsCount);
             renderingData.postProcessingEnabled = anyPostProcessingEnabled;
-
+            renderingData.cameraData.camera.depthTextureMode |= DepthTextureMode.MotionVectors;
             CheckAndApplyDebugSettings(ref renderingData);
         }
 

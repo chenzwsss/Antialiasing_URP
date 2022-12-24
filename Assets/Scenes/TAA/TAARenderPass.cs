@@ -8,8 +8,8 @@ public class TAARenderPass : ScriptableRenderPass
 
     static readonly int HistoryTexId = Shader.PropertyToID("_HistoryTex");
     static readonly int JitterId = Shader.PropertyToID("_Jitter");
+    static readonly int SharpnessId = Shader.PropertyToID("_Sharpness");
 
-    TAA taa;
     Material taaMaterial;
     RenderTargetIdentifier currentTarget;
 
@@ -22,9 +22,11 @@ public class TAARenderPass : ScriptableRenderPass
 
     TAAData m_TaaData;
 
-    public TAARenderPass(RenderPassEvent evt, CustomPostProcessData customPostProcessData)
+    public TAARenderPass(RenderPassEvent evt, ScriptableRenderPassInput passInput, CustomPostProcessData customPostProcessData)
     {
         renderPassEvent = evt;
+
+        ConfigureInput(passInput);
 
         var shader = customPostProcessData.shaders.taaShader;
         if (shader == null)
@@ -50,24 +52,6 @@ public class TAARenderPass : ScriptableRenderPass
         if (taaMaterial == null)
         {
             Debug.LogError("Material not created.");
-            return;
-        }
-
-        if (!renderingData.cameraData.postProcessEnabled)
-        {
-            return;
-        }
-
-        var stack = VolumeManager.instance.stack;
-        taa = stack.GetComponent<TAA>();
-
-        if (taa == null)
-        {
-            return;
-        }
-
-        if (!taa.IsActive())
-        {
             return;
         }
 
@@ -98,7 +82,11 @@ public class TAARenderPass : ScriptableRenderPass
         var historyRead = CheckHistory(indexRead, descriptor);
         var historyWrite = CheckHistory(m_HistoryWrite, descriptor);
 
-        taaMaterial.SetVector(JitterId, m_TaaData.offset);
+        var stack = VolumeManager.instance.stack;
+        var taa = stack.GetComponent<TAA>();
+
+        taaMaterial.SetVector(JitterId, m_TaaData.jitter);
+        taaMaterial.SetFloat(SharpnessId, taa.sharpness.value);
         taaMaterial.SetTexture(HistoryTexId, historyRead);
         cmd.Blit(source, historyWrite, taaMaterial, shaderPass);
         cmd.Blit(historyWrite, source);

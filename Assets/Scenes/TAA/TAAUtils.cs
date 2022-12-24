@@ -1,31 +1,16 @@
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class TAAUtils
 {
     const int k_SampleCount = 8;
     static int sampleIndex { get; set; }
 
-    public static float HaltonSeqGet(int index, int radix)
-    {
-        float result = 0f;
-        float fraction = 1f / (float)radix;
-
-        while (index > 0)
-        {
-            result += (float)(index % radix) * fraction;
-
-            index /= radix;
-            fraction /= (float)radix;
-        }
-
-        return result;
-    }
-
     public static Vector2 GenerateRandomOffset()
     {
         var offset = new Vector2(
-            HaltonSeqGet((sampleIndex & 1023) + 1, 2) - 0.5f,
-            HaltonSeqGet((sampleIndex & 1023) + 1, 3) - 0.5f
+            HaltonSequence.Get((sampleIndex & 1023) + 1, 2) - 0.5f,
+            HaltonSequence.Get((sampleIndex & 1023) + 1, 3) - 0.5f
         );
 
         if (++sampleIndex >= k_SampleCount)

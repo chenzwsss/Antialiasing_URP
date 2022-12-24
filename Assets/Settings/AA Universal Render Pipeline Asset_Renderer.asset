@@ -16,6 +16,7 @@ MonoBehaviour:
   m_CustomPostProcessData: {fileID: 11400000, guid: 0d07f97d495dba94186d0b98b23ac5ae,
     type: 2}
   m_Event: 550
+  m_Input: 8
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -28,7 +28,7 @@ public class TAAJitterPass : ScriptableRenderPass
             cmd.Clear();
 
             Camera camera = renderingData.cameraData.camera;
-            cmd.SetViewProjectionMatrices(camera.worldToCameraMatrix, m_TaaData.projJitter);
+            cmd.SetViewProjectionMatrices(camera.worldToCameraMatrix, m_TaaData.projectionJitter);
         }
 
         context.ExecuteCommandBuffer(cmd);
