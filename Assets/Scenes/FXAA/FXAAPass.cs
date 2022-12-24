@@ -92,7 +92,7 @@ public class FXAAPass : ScriptableRenderPass
 
         int shaderPass = fxaa.useConsole.value ? (int)ShaderPasses.Console : (int)ShaderPasses.Quality;
 
-        cmd.GetTemporaryRT(TempTargetId, width, height, 0, FilterMode.Bilinear, RenderTextureFormat.Default);
+        cmd.GetTemporaryRT(TempTargetId, width, height, 0, FilterMode.Bilinear, RenderTextureFormat.DefaultHDR);
 
         cmd.Blit(source, destination);
         cmd.Blit(destination, source, fxaaMaterial, shaderPass);

@@ -81,7 +81,7 @@ public class ZoomBlurPass : ScriptableRenderPass
         int shaderPass = 0;
 
         cmd.SetGlobalTexture(MainTexId, source);
-        cmd.GetTemporaryRT(destination, w, h, 0, FilterMode.Point, RenderTextureFormat.Default);
+        cmd.GetTemporaryRT(destination, w, h, 0, FilterMode.Point, RenderTextureFormat.DefaultHDR);
         cmd.Blit(source, destination);
         cmd.Blit(destination, source, zoomBlurMaterial, shaderPass);
 

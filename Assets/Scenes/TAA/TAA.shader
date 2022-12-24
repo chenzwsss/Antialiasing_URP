@@ -23,10 +23,12 @@ Shader "Hidden/PostEffect/TAA"
 
             TEXTURE2D(_MainTex);
             SAMPLER(sampler_MainTex);
+            float4 _MainTex_TexelSize;
 
-            CBUFFER_START(UnityPerMaterial)
-                float4 _MainTex_TexelSize;
-            CBUFFER_END
+            TEXTURE2D(_HistoryTex);
+            SAMPLER(sampler_HistoryTex);
+
+            float2 _Jitter;
 
             struct Attributes
             {
@@ -50,7 +52,10 @@ Shader "Hidden/PostEffect/TAA"
 
             float4 frag(Varyings input) : SV_TARGET
             {
-                return SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, input.uv) + float4(0.1, 0.0, 0.0, 0.0);
+                float2 uv = input.uv - _Jitter;
+                float3 color = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, uv).rgb;
+                float3 history = SAMPLE_TEXTURE2D(_HistoryTex, sampler_HistoryTex, input.uv).rgb;
+                return float4(lerp(color, history, 0.05), 1.0);
             }
 
             ENDHLSL
